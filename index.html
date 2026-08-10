@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>陈汉升 · 重生之人生导师 | 智能体对话 APP</title>
+<meta name="description" content="和《我真没想重生啊》男主陈汉升唠嗑的原生安卓 APP。人情世故、恋爱技巧、职场江湖，啥都能聊；发图识图，多引擎自动切换 + 本地离线 OCR 兜底。" />
+<style>
+  :root {
+    --bg: #0d1512;
+    --bg2: #12201a;
+    --surface: #17231d;
+    --line: rgba(212,175,55,.16);
+    --gold: #d4af37;
+    --gold-soft: #e9cf7a;
+    --text: #efe8d8;
+    --dim: #9aa89e;
+    --faint: #6b7a70;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "PingFang SC","HarmonyOS Sans SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;
+    background:
+      radial-gradient(110% 70% at 50% -10%, #1a2b21 0%, var(--bg) 55%),
+      var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- 顶栏 ---------- */
+  header.nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(13,21,18,.75);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display:flex; align-items:center; justify-content:space-between; height:64px; }
+  .brand { display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:1px; }
+  .brand .seal {
+    width:36px; height:36px; border-radius:11px; display:flex; align-items:center; justify-content:center;
+    background: linear-gradient(145deg,#e0b73f,#9a7a1c); color:#141c17; font-size:18px; font-family:serif;
+    box-shadow: 0 3px 12px rgba(212,175,55,.3);
+  }
+  .nav-links { display:flex; gap:28px; font-size:14px; color:var(--dim); }
+  .nav-links a:hover { color:var(--gold-soft); }
+  .nav-dl {
+    background: linear-gradient(135deg,#d9b13c,#b8932a); color:#171d19; font-weight:700;
+    padding:9px 18px; border-radius:22px; font-size:14px; transition: transform .15s, box-shadow .2s;
+    box-shadow: 0 4px 16px rgba(212,175,55,.3);
+  }
+  .nav-dl:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(212,175,55,.42); }
+  @media (max-width: 640px) { .nav-links { display:none; } }
+
+  /* ---------- Hero ---------- */
+  section.hero { padding: 84px 0 70px; text-align:center; position:relative; }
+  .hero::before {
+    content:""; position:absolute; left:50%; top:0; transform:translateX(-50%);
+    width:520px; height:520px; border-radius:50%;
+    background: radial-gradient(circle, rgba(212,175,55,.10) 0%, transparent 62%);
+    pointer-events:none;
+  }
+  .hero-cover {
+    width: 118px; height: 118px; margin: 0 auto 26px; padding:5px; border-radius:30px;
+    background: linear-gradient(160deg, rgba(212,175,55,.55), rgba(212,175,55,.08) 65%);
+    box-shadow: 0 20px 60px rgba(0,0,0,.55);
+  }
+  .hero-cover img { width:100%; height:100%; border-radius:25px; object-fit:cover; display:block; }
+  .hero h1 {
+    font-size: clamp(40px, 8vw, 60px); font-weight:800; letter-spacing: 6px;
+    color: var(--gold-soft); text-shadow: 0 0 40px rgba(212,175,55,.35);
+  }
+  .hero .sub { margin-top:14px; font-size:17px; color:var(--dim); letter-spacing:1px; }
+  .hero .desc { margin:18px auto 0; max-width:620px; font-size:15px; line-height:1.9; color:var(--faint); }
+  .hero-btns { margin-top:34px; display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .btn {
+    display:inline-flex; align-items:center; gap:8px;
+    padding: 14px 30px; border-radius: 30px; font-size:16px; font-weight:700;
+    transition: transform .15s, box-shadow .2s;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg,#d9b13c,#b8932a); color:#171d19;
+    box-shadow: 0 8px 26px rgba(212,175,55,.35);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(212,175,55,.5); }
+  .btn-ghost { border:1px solid var(--line); color:var(--gold-soft); background:rgba(212,175,55,.05); }
+  .btn-ghost:hover { background:rgba(212,175,55,.12); }
+  .btn svg { width:17px; height:17px; stroke:currentColor; stroke-width:2.2; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+  .oss-info .repo svg { width:15px; height:15px; fill:var(--gold-soft); }
+  .hero-meta { margin-top:22px; font-size:12.5px; color:var(--faint); }
+  .hero-meta b { color:var(--dim); font-weight:600; }
+
+  /* ---------- 特性 ---------- */
+  section.features { padding: 70px 0 50px; }
+  .sec-title { text-align:center; font-size:clamp(26px,4vw,34px); font-weight:800; letter-spacing:2px; color:var(--gold-soft); }
+  .sec-sub { text-align:center; margin-top:10px; color:var(--faint); font-size:14px; }
+  .cards { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:18px; margin-top:44px; }
+  .card {
+    background: linear-gradient(170deg, var(--surface), rgba(23,35,29,.6));
+    border:1px solid var(--line); border-radius:18px; padding:26px 22px;
+    transition: transform .2s, border-color .2s;
+  }
+  .card:hover { transform: translateY(-4px); border-color: rgba(212,175,55,.4); }
+  .card .ico {
+    width:48px; height:48px; border-radius:14px; display:flex; align-items:center; justify-content:center;
+    background: rgba(212,175,55,.12); margin-bottom:16px;
+  }
+  .card .ico svg { width:24px; height:24px; stroke:var(--gold-soft); stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+  .card h3 { font-size:16.5px; margin-bottom:8px; color:var(--text); }
+  .card p { font-size:13.5px; line-height:1.8; color:var(--dim); }
+
+  /* ---------- 截图 ---------- */
+  section.screenshot { padding: 40px 0 70px; }
+  .phone {
+    width: 300px; margin: 44px auto 0; padding: 12px;
+    border-radius: 42px; border:1px solid var(--line);
+    background: linear-gradient(165deg, #1d2b23, #0f1a15);
+    box-shadow: 0 40px 100px rgba(0,0,0,.6), 0 0 0 1px rgba(212,175,55,.08);
+    position: relative;
+  }
+  .phone::before {
+    content:""; position:absolute; left:50%; top:22px; transform:translateX(-50%);
+    width:84px; height:5px; border-radius:3px; background:rgba(255,255,255,.14); z-index:2;
+  }
+  .phone img { width:100%; border-radius:30px; display:block; box-shadow: inset 0 0 30px rgba(0,0,0,.4); }
+  .phone .cap { text-align:center; margin-top:14px; color:var(--faint); font-size:12.5px; letter-spacing:1px; }
+
+  /* ---------- 开源技能 ---------- */
+  section.opensource { padding: 30px 0 70px; }
+  .oss-card {
+    max-width: 860px; margin: 42px auto 0;
+    background: linear-gradient(170deg, var(--surface), rgba(23,35,29,.6));
+    border:1px solid var(--line); border-radius:22px;
+    display:grid; grid-template-columns: 1fr 1fr; gap:0; overflow:hidden;
+  }
+  .oss-shot { border-right:1px solid var(--line); }
+  .oss-shot img { width:100%; height:100%; object-fit:cover; display:block; min-height:280px; }
+  .oss-info { padding: 30px 26px; display:flex; flex-direction:column; justify-content:center; }
+  .oss-info .repo {
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:13px; color:var(--gold-soft); border:1px solid var(--line);
+    padding:6px 14px; border-radius:20px; width:fit-content; margin-bottom:16px;
+    background: rgba(212,175,55,.06);
+  }
+  .oss-info h3 { font-size:19px; margin-bottom:12px; color:var(--text); }
+  .oss-info p { font-size:13.5px; line-height:1.9; color:var(--dim); margin-bottom:20px; }
+  @media (max-width: 700px) {
+    .oss-card { grid-template-columns: 1fr; }
+    .oss-shot { border-right:none; border-bottom:1px solid var(--line); }
+    .oss-shot img { min-height:200px; }
+  }
+
+  /* ---------- 下载 ---------- */
+  section.download { padding: 60px 0 80px; }
+  .dl-card {
+    max-width: 720px; margin: 44px auto 0;
+    background: linear-gradient(170deg, var(--surface), rgba(23,35,29,.65));
+    border:1px solid var(--line); border-radius:22px; padding: 34px 30px;
+    text-align:center;
+  }
+  .dl-card .apk-name { font-size:20px; font-weight:700; color:var(--gold-soft); }
+  .dl-tags { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:16px 0 22px; }
+  .dl-tags span {
+    font-size:12px; color:var(--dim); border:1px solid var(--line);
+    padding:5px 12px; border-radius:16px; background:rgba(212,175,55,.05);
+  }
+  .dl-btn {
+    display:inline-block; padding:16px 44px; border-radius:32px; font-size:17px; font-weight:800;
+    background: linear-gradient(135deg,#d9b13c,#b8932a); color:#171d19;
+    box-shadow: 0 10px 30px rgba(212,175,55,.38);
+    transition: transform .15s, box-shadow .2s;
+  }
+  .dl-btn:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 14px 38px rgba(212,175,55,.5); }
+  .dl-note { margin-top:14px; font-size:12px; color:var(--faint); }
+
+  /* 使用步骤 */
+  .steps { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:14px; margin-top:36px; text-align:left; }
+  .step { background: rgba(212,175,55,.04); border:1px solid var(--line); border-radius:14px; padding:16px; }
+  .step b { display:flex; align-items:center; gap:8px; color:var(--gold-soft); font-size:14px; margin-bottom:6px; }
+  .step b i { font-style:normal; color:#171d19; background:var(--gold); border-radius:50%; width:20px; height:20px; display:inline-flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; }
+  .step p { font-size:12.5px; color:var(--dim); line-height:1.7; }
+
+  footer { border-top:1px solid var(--line); padding: 26px 0 34px; text-align:center; color:var(--faint); font-size:12.5px; line-height:2; }
+  footer b { color:var(--dim); }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <div class="brand"><span class="seal">陈</span>陈汉升</div>
+    <nav class="nav-links">
+      <a href="#features">为什么聊</a>
+      <a href="#screenshot">界面预览</a>
+      <a href="#opensource">开源</a>
+      <a href="#download">下载</a>
+    </nav>
+    <a class="nav-dl" href="#download">立即下载</a>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-cover"><img src="images/cover.png" alt="我真没想重生啊" onerror="this.style.display='none'"/></div>
+    <h1>陈汉升</h1>
+    <div class="sub">重生之人生导师 · 和你唠嗑的 AI 老油条</div>
+    <p class="desc">
+      35 岁成功商人的灵魂，18 岁大学生的皮囊。人情世故、恋爱技巧、职场江湖、饭局酒桌——
+      把《我真没想重生啊》里那个陈汉升，装进你的手机里。有事儿直说，他给你掰扯。
+    </p>
+    <div class="hero-btns">
+      <a class="btn btn-primary" href="#download">下载安卓 APP</a>
+      <a class="btn btn-ghost" href="#screenshot">看看界面</a>
+    </div>
+    <div class="hero-meta">原生安卓 · <b>v2.1.2</b> · Android 8.0+ · 49MB · 支持发图识图</div>
+  </div>
+</section>
+
+<!-- 特性 -->
+<section class="features" id="features">
+  <div class="wrap">
+    <div class="sec-title">为什么跟汉升聊</div>
+    <div class="sec-sub">不是冷冰冰的机器人，是懂人情世故的老江湖</div>
+    <div class="cards">
+      <div class="card">
+        <div class="ico">
+          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </div>
+        <h3>陈汉升人格</h3>
+        <p>口头禅、笑声、见人下菜的语气、江湖智慧——深度还原角色，跟你称兄道弟，不是"AI 分析"。</p>
+      </div>
+      <div class="card">
+        <div class="ico">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        </div>
+        <h3>发图识图</h3>
+        <p>截图、照片、表情包都能看。智谱 / 通义 / 硅基 / Gemini 四引擎自动切换，全挂还有本地离线 OCR 兜底。</p>
+      </div>
+      <div class="card">
+        <div class="ico">
+          <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        </div>
+        <h3>纯原生 APP</h3>
+        <p>Kotlin + Material 3 原生开发，不是网页套壳。启动快、手感顺、省电省流量。</p>
+      </div>
+      <div class="card">
+        <div class="ico">
+          <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h3>Key 只存本机</h3>
+        <p>填你自己的 DeepSeek Key，只保存在手机本地，不内置、不上传、不共享。聊天记录也只在本地。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 截图 -->
+<section class="screenshot" id="screenshot">
+  <div class="wrap">
+    <div class="sec-title">界面预览</div>
+    <div class="sec-sub">深色鎏金 · 聊天即江湖</div>
+    <div class="phone">
+      <img src="images/app-screenshot.jpg" alt="陈汉升 APP 界面截图" />
+      <div class="cap">陈汉升 APP 实拍界面</div>
+    </div>
+  </div>
+</section>
+
+<!-- 开源技能 -->
+<section class="opensource" id="opensource">
+  <div class="wrap">
+    <div class="sec-title">人格 · 开源驱动</div>
+    <div class="sec-sub">话术与处世哲学，蒸馏自开源技能库</div>
+
+    <div class="oss-card">
+      <div class="oss-shot">
+        <img src="images/github-skill.png" alt="awesome-chenhansheng-skill 开源仓库" />
+      </div>
+      <div class="oss-info">
+        <span class="repo">
+          <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          awesome-chenhansheng-skill
+        </span>
+        <h3>陈汉升式为人处世与恋爱技巧</h3>
+        <p>
+          从 300 万字小说《我真没想重生啊》中系统蒸馏出的社交智慧与语言风格
+          ——递烟、敬酒、推拉、情感债务、江湖话术，全部开源。
+        </p>
+        <a class="btn btn-ghost" style="align-self:flex-start;"
+           href="https://github.com/yan-stone-computer/awesome-chenhansheng-skill"
+           target="_blank" rel="noopener">GitHub 仓库
+          <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 下载 -->
+<section class="download" id="download">
+  <div class="wrap">
+    <div class="sec-title">下载安装</div>
+    <div class="sec-sub">安卓安装包，传手机就能装</div>
+
+    <div class="dl-card">
+      <div class="apk-name">陈汉升 v2.1.2</div>
+      <div class="dl-tags">
+        <span>原生安卓</span><span>Android 8.0+</span><span>49 MB</span><span>支持识图</span><span>无内置 Key</span>
+      </div>
+      <a class="dl-btn" href="download/ChenHanshen_v2.1.2.apk" download="陈汉升_v2.1.2.apk">
+        <svg viewBox="0 0 24 24" style="width:18px;height:18px;vertical-align:-3px;stroke:currentColor;stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round;margin-right:8px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        下载 APK 安装包
+      </a>
+      <div class="dl-note">个人自用签名，安装时提示"未知来源"选允许即可</div>
+
+      <div class="steps">
+        <div class="step">
+          <b><i>1</i>传文件到手机</b>
+          <p>下载 APK 后通过微信/QQ/数据线发给手机，点开文件安装。</p>
+        </div>
+        <div class="step">
+          <b><i>2</i>填入你的 Key</b>
+          <p>首次打开自动弹出设置：填 DeepSeek Key（必填）开聊；填智谱 GLM Key（免费）解锁识图。</p>
+        </div>
+        <div class="step">
+          <b><i>3</i>开唠</b>
+          <p>感情、饭局、职场、被欺负了——跟汉升直说。发图也行，他眼神好使。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>陈汉升 · 智能体对话 APP</div>
+    <div>基于 <b>DeepSeek</b> 对话模型 · <b>GLM / 通义 / 硅基 / Gemini</b> 多引擎识图 · 原生 Kotlin 开发</div>
+    <div>人格蒸馏自开源技能库 <a href="https://github.com/yan-stone-computer/awesome-chenhansheng-skill" target="_blank" rel="noopener" style="color:var(--gold-soft)">awesome-chenhansheng-skill</a> · 仅供个人学习使用</div>
+  </div>
+</footer>
+
+</body>
+</html>
