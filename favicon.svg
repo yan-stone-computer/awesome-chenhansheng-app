@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 108">
+  <!-- 墨绿圆角底 -->
+  <rect width="108" height="108" rx="26" fill="#14261F"/>
+  <!-- 金色印章外圈 -->
+  <circle cx="54" cy="54" r="25" fill="none" stroke="#D4AF37" stroke-width="4"/>
+  <!-- 印章方块 -->
+  <rect x="42" y="44" width="24" height="22" fill="#D4AF37"/>
+  <!-- "升"字墨绿笔画 -->
+  <rect x="50" y="50" width="8" height="11" fill="#14261F"/>
+  <rect x="46" y="54" width="16" height="3" fill="#14261F"/>
+  <rect x="53" y="46" width="3" height="20" fill="#14261F"/>
+</svg>
