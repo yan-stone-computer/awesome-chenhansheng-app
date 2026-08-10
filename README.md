@@ -44,12 +44,12 @@ website/
     └── ChenHanshen_v2.1.2.apk # APK 安装包（49MB, Android 8.0+）
 ```
 
-## APK 发布建议
+## APK 发布说明
 
 - 当前版本：**v2.1.2**（49MB，Android 8.0+，支持识图，无内置 Key）
-- `download/` 内的 APK 可直接被页面下载按钮引用
-- 推荐改用 **GitHub Releases** 发布 APK：页面按钮指向 Releases 下载地址，避免二进制文件长期占据仓库体积
-- 更换新版本时：替换 `download/` 下的 APK 并同步修改 `index.html` 中的版本号、大小等文案
+- **官网下载按钮跳转百度网盘**（提取码 t4fb），不再直接引用仓库内 APK
+- `download/` 目录保留 APK 作为仓库内备用/镜像
+- 推荐后续改用 **GitHub Releases** 发布 APK，页面按钮指向 Releases 下载地址，更规范且版本可追溯
 
 ## 修改与部署
 
