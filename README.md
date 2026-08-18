@@ -60,10 +60,10 @@ python -m http.server 8080 --directory .
 
 ## 📦 下载安装
 
-> **v2.1.2** · 49 MB · Android 8.0+ · 无内置 Key
+> **v4.1.0** · 9 MB · Android 8.0+ · 内置 1000+ 章剧情知识库 · 会话记忆 · 生图/识图（内置免费国内引擎，零配置）· 无内置 Key
 
 - 🔗 百度网盘（提取码 `t4fb`）：<https://pan.baidu.com/s/1qBZf9LpIVY7sBzOd0Q7AWg?pwd=t4fb>
-- 📁 仓库镜像：`download/ChenHanshen_v2.1.2.apk`
+- 📁 仓库镜像：`download/ChenHanshen_v4.1.0.apk`
 
 **使用三步：**
 
